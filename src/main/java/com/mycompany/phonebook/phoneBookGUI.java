@@ -77,7 +77,7 @@ public class phoneBookGUI extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
-                .addGap(0, 177, Short.MAX_VALUE))
+                .addGap(0, 266, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,7 +86,7 @@ public class phoneBookGUI extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addContainerGap(301, Short.MAX_VALUE))
         );
 
         pack();
@@ -94,8 +94,9 @@ public class phoneBookGUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        
+        Person p = new Person();
+        PersonEditorGUI editor = new PersonEditorGUI();
+        editor.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

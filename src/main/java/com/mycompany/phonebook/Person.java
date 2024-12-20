@@ -18,10 +18,10 @@ public class Person {
     public Person()
     {
     }
-    private void setName(String name) {this.name = name;}
-    private void setSurname (String surname) {this.surname = surname;}
-    private void setAddress (String address) {this.address = address;}
-    private void setPhone (String phone) {this.phone = phone;}
-    private void setAge (int age) {this.age = age;}
+    protected void setName(String name) {this.name = name;}
+    protected void setSurname (String surname) {this.surname = surname;}
+    protected void setAddress (String address) {this.address = address;}
+    protected void setPhone (String phone) {this.phone = phone;}
+    protected void setAge (int age) {this.age = age;}
 }
 
