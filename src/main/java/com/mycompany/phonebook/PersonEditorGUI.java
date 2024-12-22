@@ -3,20 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.phonebook;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author rick
  */
 public class PersonEditorGUI extends javax.swing.JFrame {
-
+    private Vector<Person> list;
+    
     /**
      * Creates new form PersonEditorGUI
      */
     public PersonEditorGUI() {
-        initComponents();
-    }
+        this.list = new Vector<Person>();
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
 
+    }
+    
+    public PersonEditorGUI(Vector<Person> list) {
+        initComponents();
+        this.list = list;
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,6 +63,14 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         jLabel5.setText("Age");
 
         jTextField1.setText("Insert Name");
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
         jTextField1.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
@@ -66,12 +85,44 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         });
 
         jTextField2.setText("Insert Surname");
+        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField2FocusLost(evt);
+            }
+        });
 
         jTextField3.setText("Insert Address");
+        jTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField3FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField3FocusLost(evt);
+            }
+        });
 
         jTextField4.setText("Insert Phone");
+        jTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField4FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField4FocusLost(evt);
+            }
+        });
 
         jTextField5.setText("Insert Age");
+        jTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField5FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField5FocusLost(evt);
+            }
+        });
 
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -154,14 +205,97 @@ public class PersonEditorGUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         /* SAVE button */
-        this.p.setName(this.jTextField1.getText());
-        this.p.setSurname(this.jTextField2.getText());
-        this.p.setAddress(this.jTextField3.getText());
-        this.p.setPhone(this.jTextField4.getText());
-        this.p.setAge(Integer.parseInt(this.jTextField5.getText()));
-        System.out.printf("Succesfully saved contact %s %s", this.p.name, this.p.surname);
-        
+        Person p = new Person();
+        if (this.jTextField1.getText().equals("Insert Name")) {
+            p.setName("");
+        } else {
+            p.setName(this.jTextField1.getText());
+        }
+        if (this.jTextField2.getText().equals("Insert Surname")) {
+            p.setSurname("");
+        } else {
+            p.setSurname(this.jTextField2.getText());
+        }
+        if (this.jTextField3.getText().equals("Insert Address")) {
+            p.setAddress("");
+        } else {
+            p.setAddress(this.jTextField3.getText());
+        }
+        if (this.jTextField4.getText().equals("Insert Phone")) {
+            p.setPhone("");
+        } else {
+            p.setPhone(this.jTextField4.getText());
+        }
+        if (this.jTextField5.getText().equals("-1")) {
+            p.setAge(Integer.parseInt(""));
+        } else {
+            p.setAge(-1);
+        }
+        list.add(p);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+
+        if (jTextField1.getText().equals("Insert Name")) {
+            jTextField1.setText(""); // Clear the placeholder text
+        }
+    }//GEN-LAST:event_jTextField1FocusGained
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+
+        if (jTextField1.getText().isEmpty()) {
+            jTextField1.setText("Insert Name");
+        }
+    }//GEN-LAST:event_jTextField1FocusLost
+
+    private void jTextField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusGained
+        if (jTextField2.getText().equals("Insert Surname")) {
+            jTextField2.setText("");
+        }
+    }//GEN-LAST:event_jTextField2FocusGained
+
+    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
+        if (jTextField2.getText().isEmpty()) {
+            jTextField2.setText("Insert Name");
+        }
+    }//GEN-LAST:event_jTextField2FocusLost
+
+    private void jTextField3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusGained
+        if (jTextField3.getText().equals("Insert Address")) {
+            jTextField3.setText("");
+        }
+    }//GEN-LAST:event_jTextField3FocusGained
+
+    private void jTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusLost
+        if (jTextField3.getText().isEmpty()) {
+            jTextField3.setText("Insert Address");
+        }
+    }//GEN-LAST:event_jTextField3FocusLost
+
+    private void jTextField4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusGained
+        if (jTextField4.getText().equals("Insert Phone")) {
+            jTextField4.setText("");
+        }
+    }//GEN-LAST:event_jTextField4FocusGained
+
+    private void jTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusLost
+        if (jTextField4.getText().isEmpty()) {
+            jTextField4.setText("Insert Phone");
+        }
+    }//GEN-LAST:event_jTextField4FocusLost
+
+    private void jTextField5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusGained
+        if (jTextField5.getText().equals("Insert Age")) {
+            jTextField5.setText("");
+        }
+    }//GEN-LAST:event_jTextField5FocusGained
+
+    private void jTextField5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusLost
+        if (jTextField5.getText().isEmpty()) {
+            jTextField5.setText("Insert Age");
+        }
+    }//GEN-LAST:event_jTextField5FocusLost
 
     /**
      * @param args the command line arguments

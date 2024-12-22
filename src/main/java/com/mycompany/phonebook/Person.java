@@ -23,5 +23,10 @@ public class Person {
     protected void setAddress (String address) {this.address = address;}
     protected void setPhone (String phone) {this.phone = phone;}
     protected void setAge (int age) {this.age = age;}
+    protected String getName(){return this.name;}
+    protected String getSurname() {return this.surname;}
+    protected String getAddress() {return this.address;}
+    protected String getPhone() {return this.phone;}
+    protected int getAge() {return this.age;}
 }
 
