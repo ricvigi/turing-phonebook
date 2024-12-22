@@ -1,13 +1,28 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+* Copyright 2024 Riccardo Inverardi Galli
+* Permission is hereby granted, free of charge, to any person obtaining a copy 
+* of this software and associated documentation files (the “Software”), to deal 
+* in the Software without restriction, including without limitation the rights 
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+* copies of the Software, and to permit persons to whom the Software is 
+* furnished to do so, subject to the following conditions:
+* The above copyright notice and this permission notice shall be included in 
+* all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+* SOFTWARE.
+*/
 package com.mycompany.phonebook;
 import java.util.Vector;
 
 /**
  *
- * @author rick
+ * @author Riccardo Inverardi Galli
  */
 public class PersonEditorGUI extends javax.swing.JFrame {
     private Vector<Person> list;
@@ -15,15 +30,11 @@ public class PersonEditorGUI extends javax.swing.JFrame {
     private Person pedit;
     private int rowIdx;
     
-    /**
-     * Creates new form PersonEditorGUI
-     */
     public PersonEditorGUI() {
         this.list = new Vector<Person>();
         /* REMEMBER to put the following line in EVERY constructor of this class */
         setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
     }
-    
     public PersonEditorGUI(Vector<Person> list) {
         initComponents();
         this.list = list;
@@ -95,18 +106,6 @@ public class PersonEditorGUI extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField1FocusLost(evt);
-            }
-        });
-        jTextField1.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                jTextField1InputMethodTextChanged(evt);
-            }
-        });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
             }
         });
 
@@ -225,15 +224,6 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextField1InputMethodTextChanged
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jTextField1InputMethodTextChanged
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         if (this.pedit != null) {
@@ -244,7 +234,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
             try {
                 pedit.setAge(jTextField5.getText().isEmpty() ? -1 : Integer.parseInt(jTextField5.getText()));
             } catch (NumberFormatException e) {
-                pedit.setAge(-1); // Default age for invalid input
+                pedit.setAge(-1); 
         }
             if (phonebook != null) {
                 phonebook.updateRow(rowIdx, pedit);
@@ -260,7 +250,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
             try {
                 p.setAge(jTextField5.getText().equals("Insert Age") ? -1 : Integer.parseInt(jTextField5.getText()));
             } catch (NumberFormatException e) {
-            p.setAge(-1); // Default age for invalid input
+            p.setAge(-1);
             }
 
             list.add(p);
@@ -338,11 +328,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -364,8 +350,6 @@ public class PersonEditorGUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PersonEditorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PersonEditorGUI().setVisible(true);
