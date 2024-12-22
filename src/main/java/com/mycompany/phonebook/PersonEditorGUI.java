@@ -4,7 +4,6 @@
  */
 package com.mycompany.phonebook;
 import java.util.Vector;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,21 +11,48 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PersonEditorGUI extends javax.swing.JFrame {
     private Vector<Person> list;
+    phoneBookGUI phonebook;
+    private Person pedit;
+    private int rowIdx;
     
     /**
      * Creates new form PersonEditorGUI
      */
     public PersonEditorGUI() {
         this.list = new Vector<Person>();
+        /* REMEMBER to put the following line in EVERY constructor of this class */
         setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-
     }
     
     public PersonEditorGUI(Vector<Person> list) {
         initComponents();
         this.list = list;
+        /* REMEMBER to put the following line in EVERY constructor of this class */
         setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-
+    }
+    public PersonEditorGUI(phoneBookGUI phonebook, Vector<Person> list) {
+        initComponents();
+        this.list = list;
+        this.phonebook = phonebook;
+        /* REMEMBER to put the following line in EVERY constructor of this class */
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+    }
+    public PersonEditorGUI(phoneBookGUI phonebook, 
+                           Vector<Person> list,
+                           Person pedit,
+                           int rowIdx) {
+        initComponents();
+        this.phonebook = phonebook;
+        this.list = list;
+        this.pedit = pedit;
+        this.rowIdx = rowIdx;
+        jTextField1.setText(pedit.getName());
+        jTextField2.setText(pedit.getSurname());
+        jTextField3.setText(pedit.getAddress());
+        jTextField4.setText(pedit.getPhone());
+        jTextField5.setText(pedit.getAge() == -1 ? "" : String.valueOf(pedit.getAge()));
+        /* REMEMBER to put the following line in EVERY constructor of this class */
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -132,6 +158,11 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -204,35 +235,41 @@ public class PersonEditorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        /* SAVE button */
-        Person p = new Person();
-        if (this.jTextField1.getText().equals("Insert Name")) {
-            p.setName("");
-        } else {
-            p.setName(this.jTextField1.getText());
+
+        if (this.pedit != null) {
+            pedit.setName(jTextField1.getText().isEmpty() ? null : jTextField1.getText());
+            pedit.setSurname(jTextField2.getText().isEmpty() ? null : jTextField2.getText());
+            pedit.setAddress(jTextField3.getText().isEmpty() ? null : jTextField3.getText());
+            pedit.setPhone(jTextField4.getText().isEmpty() ? null : jTextField4.getText());
+            try {
+                pedit.setAge(jTextField5.getText().isEmpty() ? -1 : Integer.parseInt(jTextField5.getText()));
+            } catch (NumberFormatException e) {
+                pedit.setAge(-1); // Default age for invalid input
         }
-        if (this.jTextField2.getText().equals("Insert Surname")) {
-            p.setSurname("");
+            if (phonebook != null) {
+                phonebook.updateRow(rowIdx, pedit);
+            }
+            dispose();
         } else {
-            p.setSurname(this.jTextField2.getText());
+            Person p = new Person();
+            p.setName(jTextField1.getText().equals("Insert Name") ? "" : jTextField1.getText());
+            p.setSurname(jTextField2.getText().equals("Insert Surname") ? "" : jTextField2.getText());
+            p.setAddress(jTextField3.getText().equals("Insert Address") ? "" : jTextField3.getText());
+            p.setPhone(jTextField4.getText().equals("Insert Phone") ? "" : jTextField4.getText());
+
+            try {
+                p.setAge(jTextField5.getText().equals("Insert Age") ? -1 : Integer.parseInt(jTextField5.getText()));
+            } catch (NumberFormatException e) {
+            p.setAge(-1); // Default age for invalid input
+            }
+
+            list.add(p);
+            if (this.phonebook != null) {
+                this.phonebook.addContactToTable(p);
+            }
+
+            dispose();
         }
-        if (this.jTextField3.getText().equals("Insert Address")) {
-            p.setAddress("");
-        } else {
-            p.setAddress(this.jTextField3.getText());
-        }
-        if (this.jTextField4.getText().equals("Insert Phone")) {
-            p.setPhone("");
-        } else {
-            p.setPhone(this.jTextField4.getText());
-        }
-        if (this.jTextField5.getText().equals("-1")) {
-            p.setAge(Integer.parseInt(""));
-        } else {
-            p.setAge(-1);
-        }
-        list.add(p);
-        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
@@ -296,6 +333,10 @@ public class PersonEditorGUI extends javax.swing.JFrame {
             jTextField5.setText("Insert Age");
         }
     }//GEN-LAST:event_jTextField5FocusLost
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
