@@ -41,10 +41,10 @@ public class phoneBookGUI extends javax.swing.JFrame {
         /* This initializes the table model to a table of 3 columns and 0 rows */
         String[] colNames = {"Name", "Surname", "Phone"};
         this.tableModel = new DefaultTableModel(colNames, 0); 
-        this.jTable2.setModel(tableModel);
+        this.jTable2.setModel(this.tableModel);
         /* make a reference for the contacts file, and create the file if it 
          * does not exist yer */
-        File inFile = new File(infoFile);
+        File inFile = new File(this.infoFile);
         if (!inFile.exists()) {
             try 
             {
@@ -230,7 +230,6 @@ public class phoneBookGUI extends javax.swing.JFrame {
 
         jMenu2.setText("Edit");
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem2.setText("Modify");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,7 +238,6 @@ public class phoneBookGUI extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem2);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem3.setText("Delete");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,7 +283,7 @@ public class phoneBookGUI extends javax.swing.JFrame {
      * implemented inside PersonEditorGUI */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         /* New button */
-        PersonEditorGUI editor = new PersonEditorGUI(this, list);
+        PersonEditorGUI editor = new PersonEditorGUI(this, this.list);
         editor.setLocationRelativeTo(this);
         editor.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -293,7 +291,7 @@ public class phoneBookGUI extends javax.swing.JFrame {
     /* Code for the "Modify" button */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /* Modify buttton */
-        int selectedRow = jTable2.getSelectedRow();
+        int selectedRow = this.jTable2.getSelectedRow();
         /* If no row has been selected, pop out a window that asks to select a 
          * row first */
         if (selectedRow == -1) 
@@ -310,14 +308,14 @@ public class phoneBookGUI extends javax.swing.JFrame {
          * object, and the index of the selected object in the list. The contact
          * will be modified once the "Save" button is pressed in PersonEditorGUI */
         Person selected = list.get(selectedRow);
-        PersonEditorGUI editor = new PersonEditorGUI(this, list, selected, selectedRow);
+        PersonEditorGUI editor = new PersonEditorGUI(this, this.list, selected, selectedRow);
         editor.setLocationRelativeTo(this);
         editor.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
     /* Code for the "Delete" button */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         /* Delete button */
-        int selectedRow = jTable2.getSelectedRow();
+        int selectedRow = this.jTable2.getSelectedRow();
         /* If no row has been selected, pop out a window that asks to select a 
          * row first */
         if (selectedRow == -1) 
@@ -330,7 +328,7 @@ public class phoneBookGUI extends javax.swing.JFrame {
             );
             return;
         }
-        Person p = list.get(selectedRow);
+        Person p = this.list.get(selectedRow);
         String conf = String.format("Are you sure you want to delete the contact %s %s?", p.getName(), p.getSurname());
         String[] opts = {"Yes", "No"};
         /* Get a confirmation over the deletion of person p */
@@ -346,9 +344,9 @@ public class phoneBookGUI extends javax.swing.JFrame {
                                 );
         if (confirm == JOptionPane.YES_OPTION) 
         {
-            /* Remove the contact from the list and from the table */
-            list.remove(selectedRow);
-            tableModel.removeRow(selectedRow);
+            /* Remove the contact from the table */
+            
+            this.tableModel.removeRow(selectedRow);
             /* Remove the contact from the info.txt file. The procedure is 
              * similar to the update one */
             File inFile = new File(infoFile);
@@ -393,6 +391,8 @@ public class phoneBookGUI extends javax.swing.JFrame {
             {
                 System.err.println("Could not rename temporary file");
             }
+            /* Remove the contact from the list */
+            this.list.remove(selectedRow);
             JOptionPane.showMessageDialog(
                                           this, 
                                           "Contact deleted successfully.", 
@@ -419,7 +419,6 @@ public class phoneBookGUI extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.println(info.getName());
                 if ("GTK+".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
