@@ -1,6 +1,5 @@
 ## Link e contatti
-* mail: galli.rcrd@gmail.com, riccardo.inverardigalli@yahoo.com
-* telefono: +39 3486725586
+* mail: galli.rcrd[at]gmail.com, riccardo.inverardigalli[at]yahoo.com
 * github: https://github.com/ricvigi
 * repository del progetto: https://github.com/ricvigi/turing-phonebook
 
