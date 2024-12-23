@@ -250,14 +250,12 @@ public class PersonEditorGUI extends javax.swing.JFrame {
             try {
                 p.setAge(jTextField5.getText().equals("Insert Age") ? -1 : Integer.parseInt(jTextField5.getText()));
             } catch (NumberFormatException e) {
-            p.setAge(-1);
+                p.setAge(-1);
             }
-
             list.add(p);
             if (this.phonebook != null) {
                 this.phonebook.addContactToTable(p);
             }
-
             dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -330,9 +328,6 @@ public class PersonEditorGUI extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

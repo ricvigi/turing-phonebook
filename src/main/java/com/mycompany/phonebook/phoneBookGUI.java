@@ -274,7 +274,7 @@ public class phoneBookGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(
             this, 
             "Plese select a contact before pressing the delete button.", 
-            "No Selection", 
+            "Invalid Selection", 
             JOptionPane.WARNING_MESSAGE
             );
             return;
@@ -312,13 +312,13 @@ public class phoneBookGUI extends javax.swing.JFrame {
                         ;
                     } else 
                     {
-                        String nStr = String.format("%s;%s;%s;%s;%s;%d", 
-                                                p.getId(),
-                                                p.getName(),
-                                                p.getSurname(),
-                                                p.getAddress(),
-                                                p.getPhone(),
-                                                p.getAge()
+                        String nStr = String.format("%s;%s;%s;%s;%s;%s", 
+                                                fields[0],
+                                                fields[1],
+                                                fields[2],
+                                                fields[3],
+                                                fields[4],
+                                                fields[5]
                                                 );
                         writer.write(nStr);
                         writer.newLine();
