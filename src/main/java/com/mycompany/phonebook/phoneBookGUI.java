@@ -21,7 +21,6 @@ package com.mycompany.phonebook;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
-import javax.swing.JLabel;
 import java.io.*;
 /**
  *
@@ -30,23 +29,41 @@ import java.io.*;
 public class phoneBookGUI extends javax.swing.JFrame {
     private Vector<Person> list;
     private DefaultTableModel tableModel;
+    private static String infoFile = "info.txt";
     
     public phoneBookGUI() {
+        this.list = new Vector<Person>();
         initComponents();
         initTable();
-        this.list = new Vector<Person>();
-    }
-    
-    private void showContacts() {
-        System.out.printf("contacts:\n");
-        for (Person p : list) {
-            System.out.printf("name: %s, surname: %s\n", p.name, p.surname);
-        }
+        setLocationRelativeTo(null);
     }
     private void initTable() {
         String[] colNames = {"Name", "Surname", "Phone"};
         this.tableModel = new DefaultTableModel(colNames, 0); // Initialize the table model
         this.jTable2.setModel(tableModel);
+        
+        File inFile = new File(infoFile);
+        try (BufferedReader reader = new BufferedReader(new FileReader(inFile))) 
+        {
+            String line;
+            while ((line = reader.readLine()) != null) 
+            {
+                String[] fields = line.split(";");
+                Person p = new Person(fields[0], fields[1],
+                                      fields[2], fields[3], 
+                                      fields[4], Integer.parseInt(fields[5]));
+                this.list.add(p);
+                Object[] data = {
+                    p.getName(),
+                    p.getSurname(),
+                    p.getPhone(),
+                };
+                this.tableModel.addRow(data);
+            }
+        } catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
     }
     protected void addContactToTable(Person p) {
         Object[] data = {
@@ -55,8 +72,8 @@ public class phoneBookGUI extends javax.swing.JFrame {
             p.getPhone(),
         };
         this.tableModel.addRow(data);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("info.csv", true))) {
-        String row = String.format("%s,%s,%s,%s,%s,%d\n",
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(infoFile, true))) {
+        String row = String.format("%s;%s;%s;%s;%s;%d",
             p.getId(),
             p.getName(),
             p.getSurname(),
@@ -65,6 +82,7 @@ public class phoneBookGUI extends javax.swing.JFrame {
             p.getAge()
         );
         writer.write(row);
+        writer.newLine();
     } catch (IOException e) {
         e.printStackTrace();
     }
@@ -74,6 +92,47 @@ public class phoneBookGUI extends javax.swing.JFrame {
         tableModel.setValueAt(p.getName(), rowIdx, 0);
         tableModel.setValueAt(p.getSurname(), rowIdx, 1);
         tableModel.setValueAt(p.getPhone(), rowIdx, 2);
+        
+        File inFile = new File(infoFile);
+        File tFile = new File("temp.txt");
+        try (BufferedReader reader = new BufferedReader(new FileReader(inFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tFile)))
+        {
+            String line;
+            while ((line = reader.readLine()) != null) 
+            {
+                String[] fields = line.split(";");
+                String id = fields[0];
+                if (id.equals(p.id)) 
+                {
+                    String nStr = String.format("%s;%s;%s;%s;%s;%d", 
+                                                p.getId(),
+                                                p.getName(),
+                                                p.getSurname(),
+                                                p.getAddress(),
+                                                p.getPhone(),
+                                                p.getAge()
+                                                );
+                    writer.write(nStr);
+                } else 
+                {
+                    writer.write(line);
+                }
+                writer.newLine();
+            }
+        } catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+        if (!inFile.delete())
+        {
+            System.err.println("Could not delete original file");
+        }
+        if (!tFile.renameTo(inFile))
+        {
+            System.err.println("Could not rename temporary file");
+        }
+            
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -179,13 +238,14 @@ public class phoneBookGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        /* New button */
         PersonEditorGUI editor = new PersonEditorGUI(this, list);
+        editor.setLocationRelativeTo(this);
         editor.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        /* Modify buttton */
         int selectedRow = jTable2.getSelectedRow();
         /* If no row has been selected, pop out a window that asks to select a 
          * row first */
@@ -200,10 +260,12 @@ public class phoneBookGUI extends javax.swing.JFrame {
         }
         Person selected = list.get(selectedRow);
         PersonEditorGUI editor = new PersonEditorGUI(this, list, selected, selectedRow);
+        editor.setLocationRelativeTo(this);
         editor.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        /* Delete button */
         int selectedRow = jTable2.getSelectedRow();
         /* If no row has been selected, pop out a window that asks to select a 
          * row first */
@@ -234,6 +296,46 @@ public class phoneBookGUI extends javax.swing.JFrame {
         {
             list.remove(selectedRow);
             tableModel.removeRow(selectedRow);
+            File inFile = new File(infoFile);
+            File tFile = new File("temp.txt");
+            
+            try (BufferedReader reader = new BufferedReader(new FileReader(inFile));
+                 BufferedWriter writer = new BufferedWriter(new FileWriter(tFile))) 
+            {
+                String line;
+                while ((line = reader.readLine()) != null) 
+                {
+                    String[] fields = line.split(";");
+                    String id = fields[0];
+                    if (id.equals(p.getId())) 
+                    { /* If we find the line we want to delete, do nothing */
+                        ;
+                    } else 
+                    {
+                        String nStr = String.format("%s;%s;%s;%s;%s;%d", 
+                                                p.getId(),
+                                                p.getName(),
+                                                p.getSurname(),
+                                                p.getAddress(),
+                                                p.getPhone(),
+                                                p.getAge()
+                                                );
+                        writer.write(nStr);
+                        writer.newLine();
+                    }
+                }
+            } catch(IOException e) 
+            {
+                e.printStackTrace();
+            }
+            if (!inFile.delete())
+            {
+                System.err.println("Could not delete original file");
+            }
+            if (!tFile.renameTo(inFile))
+            {
+                System.err.println("Could not rename temporary file");
+            }
             JOptionPane.showMessageDialog(
                                           this, 
                                           "Contact deleted successfully.", 

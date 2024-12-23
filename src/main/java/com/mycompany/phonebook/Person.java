@@ -37,6 +37,16 @@ public class Person {
     {
         this.id = UUID.randomUUID().toString();
     }
+    public Person(String id, String name, String surname,
+                  String address, String phone, int age) 
+    {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.phone = phone;
+        this.age = age;
+    }
     protected void setName(String name) {this.name = name;}
     protected void setSurname (String surname) {this.surname = surname;}
     protected void setAddress (String address) {this.address = address;}
