@@ -27,10 +27,10 @@ import java.util.UUID;
 public class Person {
     
     public final String id;
-    public String name = null;
-    public String surname = null;
-    public String address = null;
-    public String phone = null;
+    public String name = "";
+    public String surname = "";
+    public String address = "";
+    public String phone = "";
     public int age = -1;
     
     public Person()

@@ -106,6 +106,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         jLabel5.setText("Age");
 
         jTextField1.setText("Insert Name");
+        jTextField1.setPreferredSize(new java.awt.Dimension(100, 28));
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField1FocusGained(evt);
@@ -116,6 +117,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         });
 
         jTextField2.setText("Insert Surname");
+        jTextField2.setPreferredSize(new java.awt.Dimension(100, 28));
         jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField2FocusGained(evt);
@@ -126,6 +128,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         });
 
         jTextField3.setText("Insert Address");
+        jTextField3.setPreferredSize(new java.awt.Dimension(100, 28));
         jTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField3FocusGained(evt);
@@ -136,6 +139,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         });
 
         jTextField4.setText("Insert Phone");
+        jTextField4.setPreferredSize(new java.awt.Dimension(100, 28));
         jTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField4FocusGained(evt);
@@ -146,6 +150,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
         });
 
         jTextField5.setText("Insert Age");
+        jTextField5.setPreferredSize(new java.awt.Dimension(100, 28));
         jTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField5FocusGained(evt);
@@ -190,7 +195,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 42, Short.MAX_VALUE))
+                        .addGap(0, 28, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -238,10 +243,10 @@ public class PersonEditorGUI extends javax.swing.JFrame {
          * the original data, or the modified data, or no data (then we set 
          * to null) */
         if (this.pedit != null) {
-            pedit.setName(jTextField1.getText().isEmpty() ? null : jTextField1.getText());
-            pedit.setSurname(jTextField2.getText().isEmpty() ? null : jTextField2.getText());
-            pedit.setAddress(jTextField3.getText().isEmpty() ? null : jTextField3.getText());
-            pedit.setPhone(jTextField4.getText().isEmpty() ? null : jTextField4.getText());
+            pedit.setName(jTextField1.getText().isEmpty() ? "" : jTextField1.getText());
+            pedit.setSurname(jTextField2.getText().isEmpty() ? "" : jTextField2.getText());
+            pedit.setAddress(jTextField3.getText().isEmpty() ? "" : jTextField3.getText());
+            pedit.setPhone(jTextField4.getText().isEmpty() ? "" : jTextField4.getText());
             try {
                 pedit.setAge(jTextField5.getText().isEmpty() ? -1 : Integer.parseInt(jTextField5.getText()));
             } catch (NumberFormatException e) {
@@ -256,10 +261,10 @@ public class PersonEditorGUI extends javax.swing.JFrame {
              * save a new contact. We then just get the data stored in the 
              * jTextFieldx objects and store it into a new Person p object */
             Person p = new Person();
-            p.setName(jTextField1.getText().equals("Insert Name") ? null : jTextField1.getText());
-            p.setSurname(jTextField2.getText().equals("Insert Surname") ? null : jTextField2.getText());
-            p.setAddress(jTextField3.getText().equals("Insert Address") ? null : jTextField3.getText());
-            p.setPhone(jTextField4.getText().equals("Insert Phone") ? null : jTextField4.getText());
+            p.setName(jTextField1.getText().equals("Insert Name") ? "" : jTextField1.getText());
+            p.setSurname(jTextField2.getText().equals("Insert Surname") ? "" : jTextField2.getText());
+            p.setAddress(jTextField3.getText().equals("Insert Address") ? "" : jTextField3.getText());
+            p.setPhone(jTextField4.getText().equals("Insert Phone") ? "" : jTextField4.getText());
             try 
             {
                 p.setAge(jTextField5.getText().equals("Insert Age") ? -1 : Integer.parseInt(jTextField5.getText()));
@@ -268,7 +273,7 @@ public class PersonEditorGUI extends javax.swing.JFrame {
                 p.setAge(-1);
             }
             list.add(p);
-            if (this.phonebook != null) 
+            if (this.phonebook != null)
             {
                 this.phonebook.addContactToTable(p);
             }
